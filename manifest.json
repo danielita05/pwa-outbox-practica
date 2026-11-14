@@ -1,0 +1,25 @@
+{
+    "name": "Incidencias Offline",
+    "short_name": "Incidencias",
+    "description": "Registro de incidencias en campo sin conexion",
+    "start_url": "./index.html",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#eef2f6",
+    "theme_color": "#1f3b57",
+    "lang": "es",
+    "icons": [
+        {
+            "src": "./icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "./icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

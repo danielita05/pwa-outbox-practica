@@ -1,0 +1,153 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eef2f6;
+    color: #1d2733;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    background: #1f3b57;
+    color: #fff;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.badge.online {
+    background: #2e9e5b;
+}
+
+.badge.offline {
+    background: #c0392b;
+}
+
+main {
+    max-width: 720px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 1.1rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input,
+textarea {
+    padding: 10px;
+    border: 1px solid #c5ced8;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    background: #1f3b57;
+    color: #fff;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2b5179;
+}
+
+.header-lista {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.header-lista h2 {
+    margin: 0;
+}
+
+#btn-purgar {
+    background: #7a8794;
+}
+
+#lista-outbox {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#lista-outbox li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e3e8ee;
+}
+
+#lista-outbox li.vacio {
+    color: #7a8794;
+    justify-content: center;
+}
+
+.estado {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.estado.pendiente {
+    background: #fdecc8;
+    color: #8a5a00;
+}
+
+.estado.sincronizado {
+    background: #d4f1df;
+    color: #1d6b3d;
+}
+
+.hora {
+    color: #7a8794;
+    font-size: 0.85rem;
+}

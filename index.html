@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1f3b57">
+    <title>Incidencias Offline</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" href="./icons/icon-192.png">
+</head>
+<body>
+    <header>
+        <h1>Registro de Incidencias en Campo</h1>
+        <span id="badge-red" class="badge online">En Linea</span>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Nueva Incidencia</h2>
+            <form id="form-incidencia">
+                <input type="text" id="titulo" placeholder="Titulo del reporte" required>
+                <textarea id="descripcion" placeholder="Detalle del problema" required></textarea>
+                <button type="submit">Enviar Reporte</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <div class="header-lista">
+                <h2>Bandeja de Salida</h2>
+                <button id="btn-purgar" type="button">Purgar Sincronizados</button>
+            </div>
+            <ul id="lista-outbox"></ul>
+        </section>
+    </main>
+
+    <script src="./db-helper.js"></script>
+    <script src="./app.js"></script>
+</body>
+</html>

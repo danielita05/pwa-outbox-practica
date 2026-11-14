@@ -51,6 +51,30 @@ function obtenerTodosLosRegistros() {
     });
 }
 
+function actualizarEstadoRegistro(id, nuevoEstado) {
+    return abrirDB().then((db) => {
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction([STORE_NAME], 'readwrite');
+            const store = tx.objectStore(STORE_NAME);
+            const reqGet = store.get(id);
+
+            reqGet.onsuccess = (event) => {
+                const registro = event.target.result;
+                if (!registro) {
+                    reject(new Error('No se encontro el registro con ID ' + id));
+                    return;
+                }
+                registro.estado = nuevoEstado;
+                registro.fechaSincronizacion = Date.now();
+                store.put(registro);
+            };
+
+            tx.oncomplete = () => resolve(true);
+            tx.onerror = (event) => reject(event.target.error);
+        });
+    });
+}
+
 function eliminarRegistro(id) {
     return abrirDB().then((db) => {
         return new Promise((resolve, reject) => {
