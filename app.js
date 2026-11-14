@@ -8,6 +8,14 @@ const btnPurgar = document.getElementById('btn-purgar');
 const badgeRed = document.getElementById('badge-red');
 
 if ('serviceWorker' in navigator) {
+    // aviso del sw cuando termina de sincronizar en segundo plano
+    navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data && event.data.tipo === 'OUTBOX_SINCRONIZADO') {
+            console.log('[UI] Confirmacion recibida del Service Worker');
+            renderizarColaOutbox();
+        }
+    });
+
     navigator.serviceWorker.register('./sw.js')
         .then((registro) => {
             console.log('SW registrado con scope', registro.scope);
@@ -99,14 +107,29 @@ function procesarEnvioReporte(datosFormulario) {
                 ...datosFormulario,
                 estado: 'pendiente',
                 fechaCreacion: Date.now()
-            });
+            })
+                .then(() => {
+                    // si el navegador tiene background sync el sw se encarga del reenvio
+                    if ('serviceWorker' in navigator && 'SyncManager' in window) {
+                        return navigator.serviceWorker.ready
+                            .then((registro) => {
+                                console.log('[Outbox] Registrando sync-reportes');
+                                return registro.sync.register('sync-reportes');
+                            })
+                            .catch((error) => {
+                                // si no se pudo registrar queda el evento online como respaldo
+                                console.warn('[Outbox] No se pudo registrar el sync', error);
+                            });
+                    }
+                });
         })
         .then(() => {
             return renderizarColaOutbox();
         });
 }
 
-function sincronizarPendientes() {
+// respaldo para safari y firefox que no tienen SyncManager
+function sincronizarPendientesFallback() {
     console.log('[Outbox] Buscando registros pendientes...');
 
     return obtenerTodosLosRegistros()
@@ -173,7 +196,12 @@ btnPurgar.addEventListener('click', () => {
 
 window.addEventListener('online', () => {
     actualizarIndicadorRed();
-    sincronizarPendientes();
+
+    // en chrome ya lo hace el sw con el evento sync, si no se hacen envios duplicados
+    if (!('SyncManager' in window)) {
+        console.log('[Outbox] Sin SyncManager, se usa el evento online');
+        sincronizarPendientesFallback();
+    }
 });
 
 window.addEventListener('offline', actualizarIndicadorRed);
